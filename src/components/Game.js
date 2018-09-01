@@ -14,6 +14,33 @@ class Game extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress)
+  }
+
+  // Make sure there are no re-renders when direction changes. The only re-renders should be when the internal game tick changes the state of the board, which uses the current direction.
+  shouldComponentUpdate(nextProps, nextState) {
+    const { direction } = this.state
+    if (direction !== nextState.direction) {
+      return false
+    }
+    return true
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
+  handleKeyPress(event) {
+    const keys = {
+      37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
+    }
+
+    if (event.keyCode in keys) {
+      this.setState({ direction: keys[event.keyCode] })
+    }
+  }
+
   render() {
     const tiles = []
     const { gameArea } = this.state
