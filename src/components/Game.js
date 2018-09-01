@@ -31,7 +31,7 @@ class Game extends React.Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = (event) => {
     const keys = {
       37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
     }
