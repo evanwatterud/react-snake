@@ -33,3 +33,6 @@
 .snake-tile {
   background-color: black;
 }
+.fruit-tile {
+  background-color: red;
+}

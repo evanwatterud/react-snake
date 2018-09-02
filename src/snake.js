@@ -1,5 +1,5 @@
 import {
-  gameSize, RIGHT, LEFT, UP, DOWN
+  gameSize, RIGHT
 } from './helpers/constants'
 
 const initialState = {

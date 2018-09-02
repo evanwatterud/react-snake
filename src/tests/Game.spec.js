@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount, shallow } from 'enzyme'
 import Game from '../components/Game'
+import {
+  UP, RIGHT, LEFT, DOWN
+} from '../helpers/constants'
 
 describe('Game', () => {
   it('renders without crashing', () => {
@@ -21,7 +24,7 @@ describe('Game', () => {
 
     const wrapper = shallow(<Game />)
     const directions = {
-      37: 'LEFT', 38: 'UP', 39: 'RIGHT', 40: 'DOWN'
+      37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
     }
 
     for (let i = 0; i < 4; i++) {
