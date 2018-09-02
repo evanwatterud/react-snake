@@ -1,5 +1,5 @@
-export const LEFT = 'LEFT'
-export const RIGHT = 'RIGHT'
-export const UP = 'UP'
-export const DOWN = 'DOWN'
+export const LEFT = { x: -1, y: 0 }
+export const RIGHT = { x: 1, y: 0 }
+export const UP = { x: 0, y: -1 }
+export const DOWN = { x: 0, y: 1 }
 export const gameSize = 30

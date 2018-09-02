@@ -46,6 +46,7 @@ module.exports = {
       "error",
       { "code": 5000 }
     ],
+    "no-nested-ternary": "off",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     /* Advanced Rules*/
