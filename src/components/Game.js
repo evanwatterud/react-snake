@@ -14,7 +14,7 @@ class Game extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress)
-    this.internalTick = setInterval(this.handleGameTick, 100)
+    this.internalTick = setInterval(this.handleGameTick, 75)
   }
 
   // Make sure there are no re-renders when direction changes. The only re-renders should be when the internal game tick changes the state of the board, which uses the current direction.
@@ -33,17 +33,31 @@ class Game extends React.Component {
   }
 
   handleKeyPress = (event) => {
+    const { direction, snake } = this.state
+    const keyPressed = event.keyCode
     const keys = {
       37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
     }
+    // Booleans for conditional
+    const backwardsRight = direction === LEFT && keyPressed === 39
+    const backwardsLeft = direction === RIGHT && keyPressed === 37
+    const backwardsDown = direction === UP && keyPressed === 40
+    const backwardsUp = direction === DOWN && keyPressed === 38
 
     if (event.keyCode in keys) {
-      this.setState({ direction: keys[event.keyCode] })
+      // Don't allow the snake to move backwards into itself
+      if (snake.length > 0 && (!backwardsRight && !backwardsLeft && !backwardsUp && !backwardsDown)) {
+        this.setState({ direction: keys[keyPressed] })
+      }
     }
   }
 
   handleGameTick = () => {
-    const nextState = Snake.update(this.state) // eslint-disable-line
+    // Using this.state in the setState call is fine in this case as update isn't mutating state, it returns a new state object based on this.state
+    let nextState = Snake.update(this.state) // eslint-disable-line
+    if (nextState.snake.length === 0) {
+      nextState = Snake.initialState
+    }
 
     this.setState(nextState)
   }

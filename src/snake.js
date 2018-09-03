@@ -2,14 +2,15 @@ import {
   gameSize, RIGHT
 } from './helpers/constants'
 
+const randomPos = () => { return { x: Math.floor(Math.random() * gameSize), y: Math.floor(Math.random() * gameSize) } }
+
 const initialState = {
   direction: RIGHT,
   snake: [{ x: 9, y: 9 }],
-  fruit: { x: 14, y: 15 }
+  fruit: randomPos()
 }
 
 const comparePoints = (p1, p2) => { return p1.x === p2.x && p1.y === p2.y }
-const randomPos = () => { return { x: Math.floor(Math.random() * gameSize), y: Math.floor(Math.random() * gameSize) } }
 
 const nextHead = (state) => {
   const X = state.snake[0].x + state.direction.x
@@ -19,7 +20,7 @@ const nextHead = (state) => {
 
   return { x: nextX, y: nextY }
 }
-const willCrash = (state) => { state.snake.find((pt) => { return comparePoints(nextHead(state), pt) }) }
+const willCrash = (state) => { return state.snake.find((pt) => { return comparePoints(nextHead(state), pt) }) }
 const willEat = (state) => { return comparePoints(nextHead(state), state.fruit) }
 
 const nextSnake = (state) => {
