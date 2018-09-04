@@ -14,6 +14,9 @@
   padding-top: 4%;
   text-shadow: 0 0 3px #000, -1px -1px #000, 1px 1px #000;
 }
+.instructions {
+  padding-top: 25px;
+}
 .game-area {
   display: grid;
   grid-template-columns: repeat(30, auto);

@@ -8,13 +8,13 @@ import '../css/game.css'
 class Game extends React.Component {
   constructor(props) {
     super(props)
-    this.state = Snake.initialState
+    this.state = { ...Snake.initialState, paused: false }
     this.internalTick = null
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress)
-    this.internalTick = setInterval(this.handleGameTick, 75)
+    this.setTimer()
   }
 
   // Make sure there are no re-renders when direction changes. The only re-renders should be when the internal game tick changes the state of the board, which uses the current direction.
@@ -28,7 +28,7 @@ class Game extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyPress)
-    clearInterval(this.internalTick)
+    this.clearTimer()
     this.internalTick = null
   }
 
@@ -44,12 +44,28 @@ class Game extends React.Component {
     const backwardsDown = direction === UP && keyPressed === 40
     const backwardsUp = direction === DOWN && keyPressed === 38
 
-    if (event.keyCode in keys) {
+    if (keyPressed in keys) {
       // Don't allow the snake to move backwards into itself
       if (snake.length > 0 && (!backwardsRight && !backwardsLeft && !backwardsUp && !backwardsDown)) {
         this.setState({ direction: keys[keyPressed] })
       }
+    } else if (keyPressed === 32) { // If the user presses the space bar, toggle the paused state of the game
+      this.togglePause()
     }
+  }
+
+  setTimer = () => { this.internalTick = setInterval(this.handleGameTick, 90) }
+
+  clearTimer = () => { clearInterval(this.internalTick) }
+
+  togglePause = () => {
+    const { paused } = this.state
+    if (paused) {
+      this.setTimer()
+    } else {
+      this.clearTimer()
+    }
+    this.setState({ paused: !paused })
   }
 
   handleGameTick = () => {
@@ -59,7 +75,7 @@ class Game extends React.Component {
       nextState = Snake.initialState
     }
 
-    this.setState(nextState)
+    this.setState({ ...nextState })
   }
 
   render() {
@@ -85,6 +101,7 @@ class Game extends React.Component {
         <div className="game-area">
           {tiles}
         </div>
+        <span className="instructions">To pause/unpause the game, press the spacebar</span>
       </div>
     )
   }
