@@ -56,7 +56,10 @@ class Game extends React.Component {
 
   setTimer = () => { this.internalTick = setInterval(this.handleGameTick, 90) }
 
-  clearTimer = () => { clearInterval(this.internalTick) }
+  clearTimer = () => {
+    clearInterval(this.internalTick)
+    this.internalTick = null
+  }
 
   togglePause = () => {
     const { paused } = this.state

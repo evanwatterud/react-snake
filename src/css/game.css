@@ -15,6 +15,7 @@
   text-shadow: 0 0 3px #000, -1px -1px #000, 1px 1px #000;
 }
 .instructions {
+  font-weight: bold;
   padding-top: 25px;
 }
 .game-area {
